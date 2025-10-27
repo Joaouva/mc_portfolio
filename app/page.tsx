@@ -7,6 +7,17 @@ interface HomeProps {
 	searchParams: Promise<{ category?: string }>;
 }
 
+export function generateStaticParams() {
+	return [
+		{},
+		{ category: "residential" },
+		{ category: "interior" },
+		{ category: "urban" },
+	];
+}
+
+export const dynamic = "force-static";
+
 export default async function Home({ searchParams }: HomeProps) {
 	const params = await searchParams;
 	const category = params.category || "all";

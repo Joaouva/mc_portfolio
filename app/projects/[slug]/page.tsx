@@ -1,10 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getProject } from "@/lib/data";
+import { getProject, mockProjects } from "@/lib/data";
 import { notFound } from "next/navigation";
 
 interface ProjectPageProps {
 	params: { slug: string };
+}
+
+export async function generateStaticParams() {
+	return mockProjects.map((project) => ({
+		slug: project.slug,
+	}));
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {

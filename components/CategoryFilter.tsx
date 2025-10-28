@@ -32,10 +32,10 @@ export default function CategoryFilter() {
 					key={category.value}
 					href={category.value === "all" ? "/" : `/?category=${category.value}`}
 					onClick={(e) => handleCategoryClick(category.value, e)}
-					className={`px-5 py-2.5 rounded-full text-sm font-light tracking-wider transition-all backdrop-blur-md border cursor-pointer ${
+					className={`px-5 py-2.5 rounded-full text-sm font-light tracking-wider transition-all backdrop-blur-md cursor-pointer hover:bg-white/30 dark:hover:bg-gray-900/30 hover:text-gray-900 dark:hover:text-gray-100 hover:border-gray-200/60 dark:hover:border-gray-600/60 hover:shadow-md ${
 						currentCategory === category.value
-							? "bg-white/50 dark:bg-gray-900/50 border-gray-200/60 dark:border-gray-600/60 shadow-md text-gray-900 dark:text-gray-100"
-							: "bg-white/20 dark:bg-gray-900/20 border-gray-200/40 dark:border-gray-600/40 hover:bg-white/30 dark:hover:bg-gray-900/30 text-gray-700 dark:text-gray-300"
+							? "bg-white/20 dark:bg-gray-900/90 border-gray-200/60 dark:border-gray-600/60 shadow-md text-gray-900 dark:text-gray-100 hover:bg-white/30 hover:text-gray-900 dark:hover:text-gray-100"
+							: "bg-white/20 dark:bg-gray-900/20 border-gray-200/40 dark:border-gray-600/40 text-gray-700 dark:text-gray-300 hover:bg-white/30"
 					}`}>
 					{category.label}
 				</Link>

@@ -4,7 +4,7 @@ const STRAPI_TOKEN = process.env.STRAPI_API_TOKEN;
 
 interface StrapiResponse<T> {
   data: T;
-  meta?: any;
+  meta?: unknown;
 }
 
 export async function fetchAPI<T>(
@@ -47,12 +47,12 @@ export async function getStrapiProjects(category?: string) {
     ? `?filters[category][$eq]=${category}&populate=*`
     : '?populate=*';
   
-  return fetchAPI<StrapiResponse<any[]>>(`/projects${query}`);
+  return fetchAPI<StrapiResponse<unknown[]>>(`/projects${query}`);
 }
 
 // Example function to fetch a single project
 export async function getStrapiProject(slug: string) {
-  return fetchAPI<StrapiResponse<any>>(
+  return fetchAPI<StrapiResponse<unknown>>(
     `/projects?filters[slug][$eq]=${slug}&populate=*`
   );
 }

@@ -1,114 +1,168 @@
-# Strapi CMS Setup Guide
+# 📝 Strapi Cloud Setup Guide
 
-This guide will help a non-technical user set up and manage content using Strapi Cloud's free tier.
+## 1. Create Strapi Cloud Account
 
-## Step 1: Create a Strapi Cloud Account
+1. Go to: https://cloud.strapi.io/signup
+2. Sign up with any email (test or personal - you can migrate later!)
+3. Verify your email and login
 
-1. Go to [Strapi Cloud](https://cloud.strapi.io/)
-2. Sign up for a free account
-3. Create a new project (choose the free tier)
-4. Wait for your Strapi instance to be deployed
+## 2. Create New Project
 
-## Step 2: Configure Content Types
+1. Click **"Create Project"**
+2. Select:
+   - **Free Tier** (Hobby - $0/month)
+   - **Region**: Choose closest to your location
+   - **Project Name**: `mc-portfolio` (or any name)
+3. Wait 3-5 minutes for deployment ☕
 
-Once your Strapi instance is ready:
+## 3. Access Your Strapi Admin
 
-### Create the "Project" Content Type
+After deployment:
+1. You'll get a URL like: `https://your-project-name.strapiapp.com`
+2. Click **"Open admin"**
+3. Create your admin user (username, email, password)
 
-1. In the Strapi admin panel, go to **Content-Type Builder**
-2. Click **Create new collection type**
-3. Name it: `project`
+## 4. Create Content Types
+
+### 📁 Create "Project" Collection Type
+
+1. Go to **Content-Type Builder** (left sidebar)
+2. Click **"Create new collection type"**
+3. Name it: `project` (singular)
 4. Add the following fields:
 
-   - **title** (Text, Short text) - Required
-   - **slug** (UID, attached to title) - Required
-   - **category** (Enumeration) - Required
-     - Add values: `residential`, `interior`, `urban`, `all`
-   - **description** (Text, Long text)
-   - **year** (Text, Short text)
-   - **location** (Text, Short text)
-   - **featuredImage** (Media, Single media)
-   - **images** (Media, Multiple media)
+#### Field Configuration:
 
-5. Click **Save**
-6. Restart your Strapi instance when prompted
+| Field Name | Type | Settings |
+|------------|------|----------|
+| **title** | Text (Short) | Required |
+| **slug** | UID (attached to title) | Required |
+| **description** | Text (Long) | Required |
+| **category** | Enumeration | Values: `residential`, `interior`, `urban` |
+| **year** | Text (Short) | Optional |
+| **location** | Text (Short) | Optional |
+| **featuredImage** | Text (Short) | Required (URL) |
+| **images** | JSON | Required |
 
-## Step 3: Set Permissions
+5. Click **"Save"** and wait for server restart
+
+### 🔒 Set Permissions (PUBLIC ACCESS)
 
 1. Go to **Settings** → **Roles** → **Public**
-2. Scroll down to **Permissions**
-3. Find **Project** and check:
-   - `find` (to list all projects)
-   - `findOne` (to view a single project)
-4. Click **Save**
+2. Under **Permissions**, expand **Project**
+3. Check these boxes:
+   - ✅ `find` (get all projects)
+   - ✅ `findOne` (get single project)
+4. Click **"Save"**
 
-## Step 4: Get Your API Token
+## 5. Add Content (Sample Projects)
 
-1. Go to **Settings** → **API Tokens**
-2. Click **Create new API Token**
-3. Name: `Next.js Portfolio`
-4. Token type: `Read-only`
-5. Token duration: `Unlimited`
-6. Click **Save**
-7. **Copy the token** (you'll only see it once!)
+1. Go to **Content Manager** → **Project**
+2. Click **"Create new entry"**
 
-## Step 5: Connect to Your Next.js Site
+### Example Project 1:
 
-1. In your Next.js project, create a file called `.env.local`
-2. Add these lines (replace with your actual values):
-
-```env
-NEXT_PUBLIC_STRAPI_URL=https://your-instance-name.strapiapp.com
-STRAPI_API_TOKEN=your_api_token_here
+```
+Title: Modern Villa
+Slug: modern-villa (auto-generated)
+Description: A contemporary residential project featuring clean lines and sustainable design.
+Category: residential
+Year: 2024
+Location: New York, USA
+Featured Image: https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800
+Images: 
+[
+  "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200",
+  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200",
+  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200"
+]
 ```
 
-3. Restart your Next.js development server
+3. Click **"Save"** and **"Publish"**
+4. Repeat for more projects
 
-## Step 6: Add Content
+## 6. Get API Credentials
 
-1. Go to **Content Manager** in Strapi
-2. Click on **Project**
-3. Click **Create new entry**
-4. Fill in the fields:
-   - Add a title
-   - The slug will auto-generate
-   - Choose a category
-   - Add description, year, location
-   - Upload a featured image
-   - Upload multiple images in the images field
-5. Click **Save**
-6. Click **Publish**
+### API URL:
+Your API URL is: `https://your-project-name.strapiapp.com/api`
 
-## Managing Content
+### Create API Token (Optional - for authenticated requests):
 
-### Adding a New Project
-1. Content Manager → Project → Create new entry
-2. Fill in all fields
-3. Save and Publish
+1. Go to **Settings** → **API Tokens**
+2. Click **"Create new API Token"**
+3. Configure:
+   - **Name**: `Next.js App`
+   - **Token type**: `Read-only`
+   - **Token duration**: `Unlimited`
+4. Copy the token (you'll only see it once!)
 
-### Editing a Project
-1. Content Manager → Project
-2. Click on the project you want to edit
-3. Make changes
-4. Save and Publish
+## 7. Configure Your Next.js App
 
-### Deleting a Project
-1. Content Manager → Project
-2. Click on the project
-3. Click the Delete button
+### Add Environment Variables:
 
-## Using Your Own Images
+Create a `.env.local` file in your project root:
 
-1. When editing a project, click on the image field
-2. Click **Add new assets**
-3. Drag and drop your images or click to browse
-4. Select images and click **Finish**
-5. Save and Publish
+```bash
+NEXT_PUBLIC_STRAPI_URL=https://your-project-name.strapiapp.com/api
+STRAPI_API_TOKEN=your-api-token-here-if-you-created-one
+```
 
-## Tips
+### Update `lib/data.ts`:
 
-- Always click **Publish** after saving, or your content won't appear on the website
-- Use descriptive slugs for better SEO
-- Keep image file sizes reasonable (under 2MB for best performance)
-- Use consistent aspect ratios for featured images for a cleaner gallery view
+Replace the mock data functions with the actual Strapi API calls (see `lib/strapi.ts`)
 
+## 8. Test the Integration
+
+Run your Next.js app locally:
+
+```bash
+npm run dev
+```
+
+Visit http://localhost:3000 - you should see your Strapi projects!
+
+## 🔄 Migrating to Another Account Later
+
+### Option 1: Transfer Data (Manual)
+1. Export content from old Strapi project (Content Manager → Select all → Export)
+2. Create new project in new account
+3. Import content
+
+### Option 2: Database Export/Import
+1. Use Strapi's backup/restore features
+2. Export database from old project
+3. Import to new project
+
+### Option 3: Fresh Start
+1. Create new Strapi project in new account
+2. Re-add content manually
+3. Update API URL in `.env.local`
+
+## 📚 Helpful Resources
+
+- Strapi Docs: https://docs.strapi.io
+- Strapi Cloud Docs: https://docs.strapi.io/cloud
+- Content API: https://docs.strapi.io/dev-docs/api/rest
+
+## 🆓 Free Tier Limits
+
+- **1 project**
+- **10k records** (more than enough for a portfolio)
+- **1 GB assets** (images stored elsewhere recommended)
+- **Community support**
+
+## 💡 Best Practices
+
+1. **Use external image hosting** (Unsplash, Cloudinary, etc.) to save storage
+2. **Keep backups** of your content
+3. **Test locally first** before deploying changes
+4. **Use environment variables** for sensitive data
+
+---
+
+## ✅ Ready to Go!
+
+Once you've completed these steps:
+1. Your Strapi backend is live ✨
+2. Your Next.js site can fetch real content 🎉
+3. You can manage content without touching code! 💪

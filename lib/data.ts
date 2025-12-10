@@ -7,15 +7,19 @@ export const mockProjects: Project[] = [
     title: 'Project One',
     slug: 'project-one',
     category: 'residential',
-    featuredImage: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800',
+    featuredImage: '/images/projects/project-one/01.webp',
     images: [
-      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800',
-      'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800',
-      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800',
+      '/images/projects/project-one/01.webp',
+      '/images/projects/project-one/02.webp',
+      '/images/projects/project-one/03.webp',
+      '/images/projects/project-one/04.webp',
+      '/images/projects/project-one/05.webp',
+      '/images/projects/project-one/06.webp',
+      '/images/projects/project-one/07.webp',
     ],
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+    description: 'A modern residential project featuring clean lines, natural materials, and thoughtful integration of light and space.',
     year: '2024',
-    location: 'New York, USA'
+    location: 'Portugal'
   },
   {
     id: '2',

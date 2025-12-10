@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const navigation = [
@@ -17,8 +18,15 @@ export default function Navigation() {
 			{/* Logo - Fixed top left with glass effect */}
 			<Link
 				href="/"
-				className="fixed top-8 left-8 z-50 text-2xl font-light tracking-widest hover:opacity-60 transition-opacity backdrop-blur-md bg-white/30 dark:bg-gray-950/30 px-4 py-2 rounded-lg border border-white/20 dark:border-gray-700/20">
-				MC
+				className="fixed top-8 left-8 z-50 hover:opacity-60 transition-opacity backdrop-blur-md bg-white/30 dark:bg-gray-950/30 p-2 rounded-lg border border-white/20 dark:border-gray-700/20">
+				<Image
+					src="/logos/logo.png"
+					alt="MC Logo"
+					width={40}
+					height={40}
+					priority
+					className="w-40 h-40 object-contain"
+				/>
 			</Link>
 
 			{/* Mobile Hamburger Button */}

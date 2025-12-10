@@ -4,7 +4,7 @@ import { getProject, mockProjects } from "@/lib/data";
 import { notFound } from "next/navigation";
 
 interface ProjectPageProps {
-	params: { slug: string };
+	params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
@@ -14,7 +14,8 @@ export async function generateStaticParams() {
 }
 
 export default async function ProjectPage({ params }: ProjectPageProps) {
-	const project = await getProject(params.slug);
+	const { slug } = await params;
+	const project = await getProject(slug);
 
 	if (!project) {
 		notFound();
@@ -47,15 +48,19 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 					</p>
 				</div>
 
-				<div className="space-y-4">
+				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 					{project.images.map((image, index) => (
-						<div key={index} className="relative w-full h-[600px]">
+						<div
+							key={index}
+							className={`relative overflow-hidden rounded-lg ${
+								index === 0 ? "md:col-span-2 h-[500px]" : "h-[400px]"
+							}`}>
 							<Image
 								src={image}
 								alt={`${project.title} - Image ${index + 1}`}
 								fill
-								className="object-contain"
-								sizes="100vw"
+								className="object-cover hover:scale-105 transition-transform duration-500"
+								sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 							/>
 						</div>
 					))}

@@ -1,10 +1,7 @@
 import type { NextConfig } from "next";
 
-// Use basePath for GitHub Pages deployment
-// Set NEXT_PUBLIC_BASE_PATH=/mc_portfolio in GitHub Actions if needed
-// For local dev, leave it undefined
-const basePath = process.env.NEXT_PUBLIC_BASE_PATH || 
-  (process.env.NODE_ENV === 'production' ? '/mc_portfolio' : undefined);
+// Always use basePath for consistency between dev and production
+const basePath = '/mc_portfolio';
 
 const nextConfig: NextConfig = {
   output: 'export',

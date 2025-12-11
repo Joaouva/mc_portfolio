@@ -8,15 +8,20 @@ import { useMemo } from "react";
  * for static exports (GitHub Pages)
  */
 export default function OptimizedImage({ src, ...props }: ImageProps) {
-	// Detect basePath from current URL at runtime
+	// Detect basePath synchronously - check both global variable and pathname
 	const basePath = useMemo(() => {
-		if (typeof window !== "undefined") {
-			const pathname = window.location.pathname;
-			// Check if we're on GitHub Pages (pathname starts with /mc_portfolio)
-			if (pathname.startsWith("/mc_portfolio")) {
-				return "/mc_portfolio";
-			}
+		if (typeof window === "undefined") return "";
+
+		// Check global variable first (set by script in layout)
+		if ((window as any).__NEXT_BASE_PATH__) {
+			return (window as any).__NEXT_BASE_PATH__;
 		}
+
+		// Fallback: check pathname directly
+		if (window.location.pathname.startsWith("/mc_portfolio")) {
+			return "/mc_portfolio";
+		}
+
 		return "";
 	}, []);
 

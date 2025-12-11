@@ -34,9 +34,9 @@ export default function RootLayout({
 								var basePath = window.location.pathname.startsWith('/mc_portfolio') ? '/mc_portfolio' : '';
 								window.__NEXT_BASE_PATH__ = basePath;
 								
-								// Fix image paths in the initial HTML
-								if (basePath) {
-									document.addEventListener('DOMContentLoaded', function() {
+								// Fix image paths immediately and on DOMContentLoaded
+								function fixImagePaths() {
+									if (basePath) {
 										var images = document.querySelectorAll('img[src^="/"]');
 										images.forEach(function(img) {
 											var src = img.getAttribute('src');
@@ -44,8 +44,18 @@ export default function RootLayout({
 												img.setAttribute('src', basePath + src);
 											}
 										});
-									});
+									}
 								}
+								
+								// Run immediately if DOM is ready
+								if (document.readyState === 'loading') {
+									document.addEventListener('DOMContentLoaded', fixImagePaths);
+								} else {
+									fixImagePaths();
+								}
+								
+								// Also run after a short delay to catch React-rendered images
+								setTimeout(fixImagePaths, 100);
 							})();
 						`,
 					}}

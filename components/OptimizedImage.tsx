@@ -1,14 +1,33 @@
 "use client";
 
-import Image, { ImageProps } from "next/image";
 import { useMemo } from "react";
 
+interface OptimizedImageProps {
+	src: string;
+	alt: string;
+	width?: number;
+	height?: number;
+	fill?: boolean;
+	className?: string;
+	sizes?: string;
+	priority?: boolean;
+}
+
 /**
- * Wrapper around Next.js Image component that handles basePath correctly
- * for static exports (GitHub Pages)
+ * Image component that handles basePath correctly for static exports (GitHub Pages)
+ * Uses regular img tags since Next.js Image with unoptimized doesn't apply basePath
  */
-export default function OptimizedImage({ src, ...props }: ImageProps) {
-	// Detect basePath synchronously - check both global variable and pathname
+export default function OptimizedImage({
+	src,
+	alt,
+	width,
+	height,
+	fill,
+	className = "",
+	sizes,
+	priority,
+}: OptimizedImageProps) {
+	// Detect basePath synchronously during render
 	const basePath = useMemo(() => {
 		if (typeof window === "undefined") return "";
 
@@ -25,7 +44,7 @@ export default function OptimizedImage({ src, ...props }: ImageProps) {
 		return "";
 	}, []);
 
-	// If src is already a full URL, use it as-is
+	// Calculate the correct image source
 	const imageSrc = useMemo(() => {
 		if (typeof src === "string") {
 			// Full URL - use as-is
@@ -40,5 +59,31 @@ export default function OptimizedImage({ src, ...props }: ImageProps) {
 		return src;
 	}, [src, basePath]);
 
-	return <Image src={imageSrc} {...props} />;
+	// Handle fill prop (absolute positioning)
+	const style = fill
+		? {
+				position: "absolute" as const,
+				height: "100%",
+				width: "100%",
+				left: 0,
+				top: 0,
+				right: 0,
+				bottom: 0,
+				objectFit: "cover" as const,
+		  }
+		: undefined;
+
+	return (
+		<img
+			src={imageSrc}
+			alt={alt}
+			width={fill ? undefined : width}
+			height={fill ? undefined : height}
+			className={className}
+			style={style}
+			sizes={sizes}
+			loading={priority ? "eager" : "lazy"}
+			decoding="async"
+		/>
+	);
 }

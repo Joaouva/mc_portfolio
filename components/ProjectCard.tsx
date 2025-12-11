@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import Link from "next/link";
 import { Project } from "@/types";
 
@@ -10,7 +10,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 	return (
 		<Link href={`/projects/${project.slug}`} className="block group">
 			<div className="relative w-full h-[400px] overflow-hidden">
-				<Image
+				<OptimizedImage
 					src={project.featuredImage}
 					alt={project.title}
 					fill

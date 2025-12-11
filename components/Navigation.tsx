@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import OptimizedImage from "./OptimizedImage";
 import { useState } from "react";
 
 const navigation = [
@@ -19,7 +19,7 @@ export default function Navigation() {
 			<Link
 				href="/"
 				className="fixed top-8 left-8 z-50 hover:opacity-60 transition-opacity backdrop-blur-md bg-white/30 dark:bg-gray-950/30 p-2 rounded-lg border border-white/20 dark:border-gray-700/20">
-				<Image
+				<OptimizedImage
 					src="/logos/logo.png"
 					alt="MC Logo"
 					width={40}

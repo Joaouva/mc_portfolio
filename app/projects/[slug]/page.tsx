@@ -1,4 +1,4 @@
-import Image from "next/image";
+import OptimizedImage from "@/components/OptimizedImage";
 import Link from "next/link";
 import { getProject, mockProjects } from "@/lib/data";
 import { notFound } from "next/navigation";
@@ -55,7 +55,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 							className={`relative overflow-hidden rounded-lg ${
 								index === 0 ? "md:col-span-2 h-[500px]" : "h-[400px]"
 							}`}>
-							<Image
+							<OptimizedImage
 								src={image}
 								alt={`${project.title} - Image ${index + 1}`}
 								fill

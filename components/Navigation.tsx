@@ -5,7 +5,7 @@ import OptimizedImage from "./OptimizedImage";
 import { useState } from "react";
 
 const navigation = [
-	{ label: "PROJECTS", href: "/" },
+	{ label: "PROJECTS", href: "/projects" },
 	{ label: "ABOUT ME", href: "/practice" },
 	{ label: "CONTACT", href: "/contact" },
 ];

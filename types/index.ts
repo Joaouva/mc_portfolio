@@ -8,6 +8,7 @@ export interface Project {
   description: string;
   year?: string;
   location?: string;
+  tags?: string[];
 }
 
 export interface NavigationItem {

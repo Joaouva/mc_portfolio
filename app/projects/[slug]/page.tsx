@@ -23,9 +23,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
 	return (
 		<div className="min-h-screen">
-			<div className="max-w-screen-2xl mx-auto px-6 py-20">
+			<div className="max-w-screen-2xl mx-auto px-6 pt-52 pb-20">
 				<Link
-					href="/"
+					href="/projects"
 					className="inline-block mb-8 text-sm tracking-wider uppercase hover:opacity-60 transition-opacity">
 					← Back to Projects
 				</Link>
@@ -46,6 +46,21 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 					<p className="text-gray-700 dark:text-gray-300 leading-relaxed max-w-2xl">
 						{project.description}
 					</p>
+
+					{project.tags && project.tags.length > 0 && (
+						<div className="flex flex-wrap gap-2">
+							{project.tags.map((tag) => (
+								<Link
+									key={tag}
+									href={`/projects?tag=${encodeURIComponent(
+										tag.toLowerCase()
+									)}`}
+									className="px-3 py-1 text-xs font-light tracking-wider uppercase bg-white/20 dark:bg-gray-900/20 backdrop-blur-sm border border-white/20 dark:border-gray-700/20 rounded-full text-gray-700 dark:text-gray-300 hover:bg-white/30 dark:hover:bg-gray-900/30 transition-all cursor-pointer">
+									{tag}
+								</Link>
+							))}
+						</div>
+					)}
 				</div>
 
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -19,7 +19,8 @@ export const mockProjects: Project[] = [
     ],
     description: 'A modern residential project featuring clean lines, natural materials, and thoughtful integration of light and space.',
     year: '2024',
-    location: 'Portugal'
+    location: 'Portugal',
+    tags: ['Modern', 'Residential', 'Interior Design', 'Architecture']
   },
   {
     id: '2',
@@ -33,7 +34,8 @@ export const mockProjects: Project[] = [
     ],
     description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     year: '2023',
-    location: 'Paris, France'
+    location: 'Paris, France',
+    tags: ['Interior Design', 'Renovation', 'Contemporary']
   },
   {
     id: '3',
@@ -48,7 +50,8 @@ export const mockProjects: Project[] = [
     ],
     description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
     year: '2023',
-    location: 'Tokyo, Japan'
+    location: 'Tokyo, Japan',
+    tags: ['Urban Planning', 'Public Space', 'Architecture']
   },
   {
     id: '4',
@@ -61,16 +64,28 @@ export const mockProjects: Project[] = [
     ],
     description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
     year: '2022',
-    location: 'London, UK'
+    location: 'London, UK',
+    tags: ['Residential', 'Minimalist', 'Sustainable']
   },
 ];
 
-export async function getProjects(category?: string): Promise<Project[]> {
+export async function getProjects(category?: string, tag?: string): Promise<Project[]> {
   // TODO: Replace with Strapi API call
+  let filteredProjects = mockProjects;
+  
+  // Filter by category
   if (category && category !== 'all') {
-    return mockProjects.filter(project => project.category === category);
+    filteredProjects = filteredProjects.filter(project => project.category === category);
   }
-  return mockProjects;
+  
+  // Filter by tag
+  if (tag) {
+    filteredProjects = filteredProjects.filter(project => 
+      project.tags && project.tags.some(t => t.toLowerCase() === tag.toLowerCase())
+    );
+  }
+  
+  return filteredProjects;
 }
 
 export async function getProject(slug: string): Promise<Project | null> {

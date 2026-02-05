@@ -1,267 +1,179 @@
-# 📝 Strapi Setup Guide - Following Official Quick Start
+# Strapi Setup – Step-by-Step Guide
 
-This guide follows the [official Strapi quick start](https://docs.strapi.io/cms/quick-start) adapted for your portfolio project.
-
-## ✅ Current Status
-
-- ✅ Next.js app is ready to connect to Strapi
-- ✅ Strapi helper functions are prepared (`lib/strapi.ts`)
-- ⏳ **Strapi project needs to be created** (follow steps below)
+This guide is for the **client** (or whoever will manage content). Follow the steps in order. The portfolio site is already built; Strapi is the backend where you edit projects, and the site will load content from it.
 
 ---
 
-## 🚀 Part A: Create a New Strapi Project
+## Overview
 
-### Step 1: Run the Installation Script
-
-Open a terminal and run:
-
-```bash
-npx create-strapi@latest mc-portfolio-strapi
-```
-
-**What happens:**
-1. Terminal will prompt you to **log in or sign up** to Strapi Cloud
-2. Select **"Login/Sign up"** and press Enter
-3. A browser tab opens - confirm the code matches
-4. Click **"Continue with GitHub"** (login if needed)
-5. You'll see "Congratulations, you're all set!" - close the browser tab
-6. Back in terminal, press `Enter` to accept all default answers
-
-**Important:** This creates a **30-day trial** of the Growth plan automatically!
-
-### Step 2: Register First Administrator User
-
-After installation completes:
-
-```bash
-cd mc-portfolio-strapi
-npm run develop
-```
-
-Your browser will open automatically. Complete the form to create your admin account:
-- **First name**
-- **Last name**
-- **Email**
-- **Password**
-
-**🎉 Congratulations!** You now have access to the Strapi admin panel at `http://localhost:1337/admin`
+| Step | What you do |
+|------|----------------|
+| 1 | Create the Strapi project (one-time) |
+| 2 | Create your admin account and open the admin panel |
+| 3 | Create the “Project” content type (fields for title, slug, images, etc.) |
+| 4 | Set permissions so the site can read the API |
+| 5 | Add and publish your first projects |
+| 6 | Connect the Next.js site to Strapi (env + optional code) |
+| 7 | Test the site |
 
 ---
 
-## 🏗️ Part B: Build Your Content Structure
+## Step 1: Create the Strapi project
 
-### Step 1: Create "Project" Collection Type
-
-1. In the admin panel, click **"Create your first Content type"** (or go to **Content-Type Builder**)
-2. Click **"Create new collection type"**
-3. Type `Project` for the **Display name**, click **Continue**
-
-Now add these fields:
-
-#### Field 1: Title
-- Click **Text** field
-- Name: `title`
-- Go to **Advanced Settings** tab
-- ✅ Check **Required field**
-- Click **Finish**
-
-#### Field 2: Slug
-- Click **Add another field**
-- Choose **UID** field
-- Name: `slug`
-- **Attached field**: Select `title` (this auto-generates slug from title)
-- Go to **Advanced Settings** tab
-- ✅ Check **Required field**
-- Click **Finish**
-
-#### Field 3: Description
-- Click **Add another field**
-- Choose **Text** (Long text)
-- Name: `description`
-- Go to **Advanced Settings** tab
-- ✅ Check **Required field**
-- Click **Finish**
-
-#### Field 4: Category
-- Click **Add another field**
-- Choose **Enumeration**
-- Name: `category`
-- **Values** (one per line):
-  ```
-  residential
-  interior
-  urban
-  ```
-- Go to **Advanced Settings** tab
-- ✅ Check **Required field**
-- Click **Finish**
-
-#### Field 5: Year
-- Click **Add another field**
-- Choose **Text** (Short text)
-- Name: `year`
-- Click **Finish** (optional field)
-
-#### Field 6: Location
-- Click **Add another field**
-- Choose **Text** (Short text)
-- Name: `location`
-- Click **Finish** (optional field)
-
-#### Field 7: Featured Image
-- Click **Add another field**
-- Choose **Text** (Short text)
-- Name: `featuredImage`
-- Go to **Advanced Settings** tab
-- ✅ Check **Required field**
-- Click **Finish**
-
-**Note:** We're using text URLs for images (like Unsplash) to save storage. You can use Media Library later if preferred.
-
-#### Field 8: Images
-- Click **Add another field**
-- Choose **JSON**
-- Name: `images`
-- Go to **Advanced Settings** tab
-- ✅ Check **Required field**
-- Click **Finish**
-
-**Note:** This stores an array of image URLs as JSON.
-
-#### Save the Content Type
-- Click **Save** at the top right
-- Wait for Strapi to restart (~30 seconds)
-
-**✅ Done!** Your "Project" collection type is created!
+1. Open a terminal.
+2. Go to the folder where you want Strapi to live (e.g. next to the portfolio folder, or inside the same repo). Example:
+   ```bash
+   cd /path/to/ManueCruchinho
+   ```
+3. Run:
+   ```bash
+   npx create-strapi@latest mc-portfolio-strapi
+   ```
+4. When prompted:
+   - **Quickstart?** → Choose **Yes** (or **No** if you want to pick a database; then choose SQLite for simplicity).
+   - **TypeScript?** → **Yes** is fine.
+5. Wait until it finishes. It will create a folder `mc-portfolio-strapi`.
 
 ---
 
-## ☁️ Part C: Deploy to Strapi Cloud
+## Step 2: Start Strapi and create the admin user
 
-### Option 1: Deploy from Local Project (Recommended)
-
-Since you created the project with `npx create-strapi@latest`, it's already linked to Strapi Cloud:
-
-1. Go to: https://cloud.strapi.io
-2. You should see your `mc-portfolio-strapi` project
-3. Click on it, then click **"Deploy"** or **"Visit app"**
-
-### Option 2: Create Fresh Cloud Project
-
-If you want to start fresh in the cloud:
-
-1. Go to: https://cloud.strapi.io
-2. Click **"Create Project"**
-3. Choose:
-   - **Free Tier** (Hobby - $0/month)
-   - **Region**: Closest to you
-   - **Project Name**: `mc-portfolio`
-4. Wait 3-5 minutes for deployment
-
-**Important:** If you create a fresh cloud project, you'll need to recreate the content types in the cloud admin panel (follow Part B again).
+1. Go into the Strapi project and start it:
+   ```bash
+   cd mc-portfolio-strapi
+   npm run develop
+   ```
+2. A browser tab should open at **http://localhost:1337/admin**.
+3. The first time, you’ll see **“Create your first administrator”**. Fill in:
+   - First name  
+   - Last name  
+   - Email  
+   - Password  
+   and submit.
+4. You’re now in the Strapi admin at **http://localhost:1337/admin**. Keep this tab open.
 
 ---
 
-## 📝 Part D: Add Content to Your Strapi Project
+## Step 3: Create the “Project” content type
 
-### Step 1: Log in to Admin Panel
+You’re defining the structure of a “Project” (what fields each project has).
 
-**If using local project:**
-- Admin panel: `http://localhost:1337/admin`
+1. In the left sidebar, open **Content-Type Builder**.
+2. Click **Create new collection type**.
+3. **Display name:** type `Project` → **Continue**.
 
-**If using Strapi Cloud:**
-- Admin panel: `https://your-project-name.strapiapp.com/admin`
-- Create your first admin user when prompted
+Add these fields one by one (click **Add another field** for each):
 
-### Step 2: Create Project Entries
+| # | Field type | Name | Notes |
+|---|------------|------|--------|
+| 1 | **Text** (short) | `title` | Required |
+| 2 | **UID** | `slug` | Attached field: **title** (slug is generated from title). Required |
+| 3 | **Text** (long) | `description` | Required |
+| 4 | **Enumeration** | `category` | Values (one per line): `residential`, `interior`, `urban`. Required |
+| 5 | **Text** (short) | `year` | Optional |
+| 6 | **Text** (short) | `location` | Optional |
+| 7 | **Text** (short) | `featuredImage` | URL of the main image. Required |
+| 8 | **JSON** | `images` | Array of image URLs. Required |
 
-1. Go to **Content Manager** → **Collection types** → **Project**
-2. Click **"Create new entry"**
+For **Required** fields: after adding the field, open **Advanced settings** and check **Required field**, then **Finish**.
 
-#### Example Project 1:
-```
-Title: Modern Villa
-Slug: modern-villa (auto-generated from title)
-Description: A contemporary residential project featuring clean lines and sustainable design principles.
-Category: residential
-Year: 2024
-Location: New York, USA
-Featured Image: https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800
-Images: 
-[
-  "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200",
-  "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200",
-  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200"
-]
-```
-
-3. Click **Save**
-4. Repeat for more projects
-
-### Step 3: Set Roles & Permissions (CRITICAL!)
-
-**This step is essential** - without it, your Next.js app can't access the data:
-
-1. Go to **Settings** (bottom of sidebar) → **Users & Permissions Plugin** → **Roles**
-2. Click **"Public"** role
-3. Scroll down to **Permissions**
-4. Find **"Project"** and expand it
-5. ✅ Check **"find"** (get all projects)
-6. ✅ Check **"findOne"** (get single project)
-7. Click **"Save"** at the top
-
-**✅ Your API is now publicly accessible!**
-
-### Step 4: Publish Content
-
-By default, content is saved as drafts. You must publish to make it accessible:
-
-1. Go to **Content Manager** → **Collection types** → **Project**
-2. Click on a project entry
-3. Click **"Publish"** button (top right)
-4. Confirm **"Yes, publish"**
-5. Repeat for all projects
-
-**✅ Published content is now accessible via API!**
-
-### Step 5: Test the API
-
-Visit your API endpoint in a browser:
-
-**Local:** `http://localhost:1337/api/projects`
-
-**Cloud:** `https://your-project-name.strapiapp.com/api/projects`
-
-You should see JSON data with your projects! 🎉
+4. When all fields are added, click **Save** (top right). Strapi will restart (wait ~30 seconds).
 
 ---
 
-## 🔗 Connect Next.js to Strapi
+## Step 4: Set API permissions
 
-### Step 1: Create Environment File
+Without this, the portfolio site cannot read your content.
 
-Create `.env.local` in your Next.js project root:
+1. In the left sidebar: **Settings** (gear icon) → **Users & Permissions** → **Roles**.
+2. Click the **Public** role.
+3. Under **Permissions**, find **Project**.
+4. Check:
+   - **find** (list projects)
+   - **findOne** (single project by slug)
+5. Click **Save** (top right).
 
-```bash
-NEXT_PUBLIC_STRAPI_URL=https://your-project-name.strapiapp.com/api
-# Or for local: http://localhost:1337/api
+---
 
-# Optional: If you created an API token
-STRAPI_API_TOKEN=your-token-here
+## Step 5: Add and publish projects
+
+1. In the sidebar: **Content Manager** → **Collection types** → **Project**.
+2. Click **Create new entry**.
+3. Fill in at least:
+   - **title** (e.g. “Modern Villa”)
+   - **slug** (e.g. “modern-villa”; often auto-filled from title)
+   - **description**
+   - **category** (residential / interior / urban)
+   - **featuredImage** (full image URL)
+   - **images** (valid JSON array of image URLs, e.g. `["https://example.com/1.jpg", "https://example.com/2.jpg"]`)
+4. Click **Save**, then click **Publish** (top right). Confirm.
+5. Repeat for more projects.
+
+Check the API in the browser:
+
+- **http://localhost:1337/api/projects**  
+  You should see JSON with your projects.
+
+---
+
+## Step 6: Connect the Next.js site to Strapi
+
+1. In the **portfolio** project (the Next.js app), create or edit `.env.local` in the project root (same folder as `package.json`).
+2. Add (use your real Strapi URL when you deploy; for local Strapi use the line below):
+
+   ```env
+   # Local Strapi (while you run Strapi on your machine)
+   NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
+
+   # Optional: only if you use private API token
+   # STRAPI_API_TOKEN=your_token_here
+   ```
+
+   Important: use **no** `/api` at the end (e.g. `http://localhost:1337`, not `http://localhost:1337/api`).
+
+3. **Optional – use Strapi data in the site:**  
+   The app can keep using mock data until you’re ready. When you want the site to load from Strapi, the developer can switch `lib/data.ts` to use the Strapi API (see “Connect Next.js to Strapi” section below for the exact code).
+
+---
+
+## Step 7: Test the site
+
+1. Make sure Strapi is running: in the Strapi folder, `npm run develop` (Step 2).
+2. In the portfolio folder, run:
+   ```bash
+   npm run dev
+   ```
+3. Open **http://localhost:3000**.  
+   - If the site still uses mock data, you’ll see the existing demo projects.  
+   - Once `lib/data.ts` is updated to use Strapi, you’ll see the projects you created in Step 5.
+
+---
+
+## Connect Next.js to Strapi (for the developer)
+
+When the client is ready to pull content from Strapi, do the following.
+
+### 1. Environment
+
+Ensure `.env.local` has:
+
+```env
+NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
 ```
 
-### Step 2: Update Data Functions
+(Or the production Strapi URL, e.g. `https://your-project.strapiapp.com` — again **without** `/api`.)
 
-Replace the mock data in `lib/data.ts` with Strapi API calls:
+### 2. Use Strapi in `lib/data.ts`
+
+Replace the mock implementation in `lib/data.ts` with Strapi. Strapi v5 returns documents with `documentId`; v4 uses `id`. The mapping below works for the usual v5 shape; adjust if your API response differs.
 
 ```typescript
 import { Project } from '@/types';
 import { fetchAPI } from './strapi';
 
 interface StrapiProject {
-  id: number;
-  documentId: string;
+  id?: number;
+  documentId?: string;
   title: string;
   slug: string;
   description: string;
@@ -269,96 +181,64 @@ interface StrapiProject {
   year?: string;
   location?: string;
   featuredImage: string;
-  images: string[];
+  images: string[] | { url: string }[];
+}
+
+function mapStrapiProject(p: StrapiProject): Project {
+  return {
+    id: String(p.documentId ?? p.id ?? ''),
+    title: p.title,
+    slug: p.slug,
+    category: p.category as Project['category'],
+    description: p.description,
+    year: p.year,
+    location: p.location,
+    featuredImage: typeof p.featuredImage === 'string' ? p.featuredImage : (p.featuredImage as { url: string })?.url ?? '',
+    images: Array.isArray(p.images)
+      ? p.images.map((img) => (typeof img === 'string' ? img : (img as { url: string }).url))
+      : [],
+  };
 }
 
 export async function getProjects(category?: string): Promise<Project[]> {
-  const query = category && category !== 'all' 
-    ? `?filters[category][$eq]=${category}&populate=*`
+  const query = category && category !== 'all'
+    ? `?filters[category][$eq]=${encodeURIComponent(category)}&populate=*`
     : '?populate=*';
-  
   const response = await fetchAPI<{ data: StrapiProject[] }>(`/projects${query}`);
-  
-  return response.data.map((project) => ({
-    id: project.documentId,
-    title: project.title,
-    slug: project.slug,
-    category: project.category,
-    description: project.description,
-    year: project.year,
-    location: project.location,
-    featuredImage: project.featuredImage,
-    images: Array.isArray(project.images) ? project.images : [],
-  }));
+  const list = response.data ?? [];
+  return list.map(mapStrapiProject);
 }
 
 export async function getProject(slug: string): Promise<Project | null> {
   const response = await fetchAPI<{ data: StrapiProject[] }>(
-    `/projects?filters[slug][$eq]=${slug}&populate=*`
+    `/projects?filters[slug][$eq]=${encodeURIComponent(slug)}&populate=*`
   );
-  
-  if (!response.data || response.data.length === 0) {
-    return null;
-  }
-  
-  const project = response.data[0];
-  return {
-    id: project.documentId,
-    title: project.title,
-    slug: project.slug,
-    category: project.category,
-    description: project.description,
-    year: project.year,
-    location: project.location,
-    featuredImage: project.featuredImage,
-    images: Array.isArray(project.images) ? project.images : [],
-  };
+  const list = response.data ?? [];
+  if (list.length === 0) return null;
+  return mapStrapiProject(list[0]);
 }
 ```
 
-### Step 3: Test Locally
-
-```bash
-npm run dev
-```
-
-Visit `http://localhost:3000` - you should see your Strapi projects! 🎉
+After this, the portfolio will show content from Strapi.
 
 ---
 
-## 🔄 Migrating Between Accounts
+## Running Strapi in production (optional)
 
-### Transfer Data Between Projects:
-
-1. **Export from old project:**
-   - Content Manager → Select all entries → Export
-
-2. **Import to new project:**
-   - Content Manager → Import → Upload file
-
-3. **Update environment variables:**
-   - Update `.env.local` with new API URL
+- **Strapi Cloud:** [Strapi Cloud](https://cloud.strapi.io) – create a project, then in the cloud admin recreate the same “Project” content type and permissions, and add your content. Set `NEXT_PUBLIC_STRAPI_URL` to the cloud URL (no `/api`).
+- **Self‑hosted:** Deploy Strapi to a VPS or platform (Node + database). Point `NEXT_PUBLIC_STRAPI_URL` to that URL.
 
 ---
 
-## 📚 Resources
+## Checklist
 
-- [Official Strapi Quick Start](https://docs.strapi.io/cms/quick-start)
-- [Strapi Cloud Documentation](https://docs.strapi.io/cloud)
-- [REST API Documentation](https://docs.strapi.io/dev-docs/api/rest)
+- [ ] Created Strapi project (`npx create-strapi@latest mc-portfolio-strapi`)
+- [ ] Created admin user and can open http://localhost:1337/admin
+- [ ] Created “Project” content type with all fields
+- [ ] Set Public role: **find** and **findOne** for Project
+- [ ] Created at least one project and **published** it
+- [ ] Opened http://localhost:1337/api/projects and see JSON
+- [ ] Added `NEXT_PUBLIC_STRAPI_URL` to portfolio `.env.local` (no `/api`)
+- [ ] (Developer) Switched `lib/data.ts` to Strapi and tested at http://localhost:3000
 
----
-
-## ✅ Checklist
-
-- [ ] Created Strapi project (`npx create-strapi@latest`)
-- [ ] Created admin user
-- [ ] Created "Project" content type with all fields
-- [ ] Set Public role permissions (find, findOne)
-- [ ] Created and published project entries
-- [ ] Tested API endpoint in browser
-- [ ] Created `.env.local` with API URL
-- [ ] Updated `lib/data.ts` to use Strapi API
-- [ ] Tested Next.js app locally
-
-**Once all checked, your portfolio is fully connected to Strapi! 🚀**
+Once all are done, the client can manage projects in Strapi and the site will display them.

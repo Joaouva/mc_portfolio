@@ -21,17 +21,19 @@ npm run dev
 
 Open http://localhost:3000 - Your portfolio is live with placeholder content!
 
-### 2. Set Up Strapi CMS (15 minutes)
+### 2. Set Up Strapi CMS (15–20 minutes)
 
-Follow the detailed guide: [STRAPI_SETUP.md](./STRAPI_SETUP.md)
+**Full step-by-step guide (for you or your client):** [STRAPI_SETUP.md](./STRAPI_SETUP.md)
 
 Quick version:
-1. Go to https://cloud.strapi.io/
-2. Create free account
-3. Create a new project
-4. Set up "Project" content type
-5. Get your API token
-6. Add to `.env.local` file
+1. Run `npx create-strapi@latest mc-portfolio-strapi` (outside or next to this folder)
+2. `cd mc-portfolio-strapi` → `npm run develop`
+3. Create admin user at http://localhost:1337/admin
+4. In Content-Type Builder: create “Project” collection with title, slug, description, category, year, location, featuredImage, images
+5. Settings → Roles → Public: enable **find** and **findOne** for Project
+6. Add projects in Content Manager and **Publish** them
+7. In this app: add `NEXT_PUBLIC_STRAPI_URL=http://localhost:1337` to `.env.local` (no `/api` at the end)
+8. Optional: switch `lib/data.ts` to Strapi (code in STRAPI_SETUP.md)
 
 ### 3. Deploy to Internet (10 minutes)
 

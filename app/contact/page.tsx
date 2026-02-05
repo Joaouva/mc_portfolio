@@ -27,9 +27,9 @@ export default function ContactPage() {
 								Studio
 							</h2>
 							<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-								Calçada das Lajes, Lote 21, 6º C
+								Rua Professor Manuel Valadares, nº13A
 								<br />
-								1900-293 Lisboa
+								1750-232 Lisboa
 							</p>
 						</div>
 
